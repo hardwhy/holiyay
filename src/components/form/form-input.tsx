@@ -24,8 +24,8 @@ function FormInput({
       </Label>
       <Input
         type={type}
-        name="firstName"
-        id="firstName"
+        name={name}
+        id={name}
         placeholder={placeholder}
         required
         defaultValue={defaultValue}
