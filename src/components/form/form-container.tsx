@@ -1,3 +1,5 @@
+"use client"
+
 import { ActionFunction } from "@/domain/types/action-function";
 import { useToast } from "@/hooks/use-toast";
 import React, { ReactNode, useEffect } from "react";
