@@ -1,21 +1,8 @@
 import SubmitButton from "@/components/form/button";
 import FormContainer from "@/components/form/form-container";
 import FormInput from "@/components/form/form-input";
-import { ActionFunction } from "@/domain/types/action-function";
+import { createProfileAction } from "@/utils/actions/profile-actions";
 import React from "react";
-
-const createProfileAction: ActionFunction = async (
-  prevState: any,
-  data: FormData
-) => {
-  "use server";
-  const firstName = data.get("firstName") as string;
-  console.log("data", data);
-  console.log("firstName", firstName);
-  return {
-    message: "dummy message",
-  };
-};
 
 function CreateProfilePage() {
   return (
