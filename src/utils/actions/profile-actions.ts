@@ -1,32 +1,46 @@
 "use server";
 
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { ProfileSchema } from "../schemas/profile-schema";
 import { ActionFunction } from "../types/action-function";
+import db from "../db/client";
+import { redirect } from "next/navigation";
 
 export const createProfileAction: ActionFunction = async (
   prevState: any,
   data: FormData
 ) => {
-  //   "use server";
-  //   const firstName = data.get("firstName") as string;
-  //   console.log("data", data);
-  //   console.log("firstName", firstName);
-  //   return {
-  //     message: "dummy message",
-  //   };
-
   try {
-    console.log("data", data);
+    const user = await currentUser();
+    console.log("clerk user", user);
+    if (!user) throw Error("Please login to create a profile");
 
     const raw = Object.fromEntries(data);
-    console.log("Raw data", raw);
 
     const validatedFields = ProfileSchema.parse(raw);
-    console.log(validatedFields);
 
-    return { message: "Profile created successfully" };
+    await db.profile.create({
+      data: {
+        clerkId: user.id,
+        email: user.emailAddresses[0].emailAddress,
+        profileImage: user.imageUrl,
+        ...validatedFields,
+      },
+    });
+
+    (await clerkClient()).users.updateUserMetadata(user.id, {
+      privateMetadata: {
+        hasProfile: true,
+      }
+    })
+
+    return { title: "Success", message: "Profile has been created" };
   } catch (error) {
-    console.log("Profile creation error:", error);
-    return { message: "Something went wrong while creating profile" };
+    const message = error instanceof Error? error.message : '';
+    return {
+      title: "Something went wrong while creating profile",
+      message: message,
+    };
   }
+  redirect('/');
 };
