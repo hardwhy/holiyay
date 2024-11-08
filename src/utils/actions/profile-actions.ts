@@ -43,6 +43,18 @@ export const createProfileAction: ActionFunction = async (
   redirect("/");
 };
 
+export const checkUserHasProfile = async (): Promise<boolean> => {
+  try {
+    const user = await getUser();
+    const hasProfile = user.privateMetadata?.hasProfile;
+    return !!hasProfile;
+  } catch (error) {
+    console.log("checkUserHasProfile error:", error);
+
+    return false;
+  }
+};
+
 export const getProfileImage = async () => {
   try {
     const user = await getUser();
