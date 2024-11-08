@@ -5,6 +5,24 @@ import { ProfileSchema } from "../schemas/profile-schema";
 import { ActionFunction } from "../types/action-function";
 import db from "../db/client";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { ActionResult } from "../types/action-result";
+
+const handleError = ({
+  error,
+  caller,
+  title,
+}: {
+  error: unknown;
+  caller: string;
+  title: string;
+}): ActionResult => {
+  console.log("error from", caller, ": ", error);
+
+  let message: string = "";
+  if (error instanceof Error) message = error.message;
+  return { title, message };
+};
 
 export const createProfileAction: ActionFunction = async (
   prevState: any,
@@ -34,11 +52,11 @@ export const createProfileAction: ActionFunction = async (
 
     return { title: "Success", message: "Profile has been created" };
   } catch (error) {
-    const message = error instanceof Error ? error.message : "";
-    return {
+    return handleError({
+      error,
+      caller: "createProfileAction",
       title: "Something went wrong while creating profile",
-      message: message,
-    };
+    });
   }
   redirect("/");
 };
@@ -76,8 +94,31 @@ export const getUserProfile = async () => {
   return profile;
 };
 
-export const updateUserProfile: ActionFunction = async () => {
-  return { title: "Success", message: "Profile has been updated!" };
+export const updateUserProfile: ActionFunction = async (
+  prevState: any,
+  data: FormData
+) => {
+  try {
+    const user = await getUser();
+
+    const raw = Object.fromEntries(data);
+
+    const validatedFields = ProfileSchema.parse(raw);
+
+    await db.profile.update({
+      where: { clerkId: user.id },
+      data: validatedFields,
+    });
+
+    revalidatePath("/profile");
+    return { title: "Success", message: "Profile has been updated" };
+  } catch (error) {
+   return handleError({
+     error,
+     caller: "updateUserProfile",
+     title: "Something went wrong while updating profile",
+   });
+  }
 };
 
 const getUser = async (): Promise<User> => {
