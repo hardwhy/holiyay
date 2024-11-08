@@ -114,12 +114,40 @@ export const updateUserProfile: ActionFunction = async (
     revalidatePath("/profile");
     return { title: "Success", message: "Profile has been updated" };
   } catch (error) {
-   return handleError({
-     error,
-     caller: "updateUserProfile",
-     title: "Something went wrong while updating profile",
-   });
+    return handleError({
+      error,
+      caller: "updateUserProfile",
+      title: "Something went wrong while updating profile",
+    });
   }
+};
+
+export const updateImageProfile: ActionFunction = async (
+  prevState: any,
+  data: FormData
+) => {
+  return { title: "success", message: "Profile image has been updated" };
+  // try {
+  //   const user = await getUser();
+
+  //   const raw = Object.fromEntries(data);
+
+  //   const validatedFields = validateWithZodSchema(ProfileSchema, raw);
+
+  //   await db.profile.update({
+  //     where: { clerkId: user.id },
+  //     data: validatedFields,
+  //   });
+
+  //   revalidatePath("/profile");
+  //   return { title: "Success", message: "Profile has been updated" };
+  // } catch (error) {
+  //   return handleError({
+  //     error,
+  //     caller: "updateUserProfile",
+  //     title: "Something went wrong while updating profile",
+  //   });
+  // }
 };
 
 const getUser = async (): Promise<User> => {
