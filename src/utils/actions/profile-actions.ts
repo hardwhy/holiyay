@@ -7,6 +7,7 @@ import db from "../db/client";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { ActionResult } from "../types/action-result";
+import { validateWithZodSchema } from "../schemas/validator";
 
 const handleError = ({
   error,
@@ -33,7 +34,7 @@ export const createProfileAction: ActionFunction = async (
 
     const raw = Object.fromEntries(data);
 
-    const validatedFields = ProfileSchema.parse(raw);
+    const validatedFields = validateWithZodSchema(ProfileSchema, data);
 
     await db.profile.create({
       data: {
@@ -103,7 +104,7 @@ export const updateUserProfile: ActionFunction = async (
 
     const raw = Object.fromEntries(data);
 
-    const validatedFields = ProfileSchema.parse(raw);
+    const validatedFields = validateWithZodSchema(ProfileSchema, raw);
 
     await db.profile.update({
       where: { clerkId: user.id },
