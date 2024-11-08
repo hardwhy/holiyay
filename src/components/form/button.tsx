@@ -7,16 +7,23 @@ import { Button } from "@/components/ui/button";
 type SubmitButtonProps = {
   className?: string;
   text?: string;
+  size?: ButtonSize;
 };
 
-function SubmitButton({ className = "", text = "" }: SubmitButtonProps) {
+type ButtonSize = "default" | "lg" | "sm";
+
+function SubmitButton({
+  className = "",
+  text = "submit",
+  size = "default",
+}: SubmitButtonProps) {
   const { pending } = useFormStatus();
   return (
     <Button
       type="submit"
       disabled={pending}
       className={`capitalize ${className}`}
-      size={"lg"}
+      size={size}
     >
       {pending ? (
         <>
