@@ -43,15 +43,13 @@ export const createProfileAction: ActionFunction = async (
   redirect("/");
 };
 
-export const checkUserHasProfile = async (): Promise<boolean> => {
+export const checkUserHasProfile = async (): Promise<void> => {
   try {
     const user = await getUser();
     const hasProfile = user.privateMetadata?.hasProfile;
-    return !!hasProfile;
+    if (!!hasProfile) redirect("/");
   } catch (error) {
     console.log("checkUserHasProfile error:", error);
-
-    return false;
   }
 };
 
@@ -70,8 +68,25 @@ export const getProfileImage = async () => {
   }
 };
 
+export const getUserProfile = async () => {
+  const user = await getAuthUser();
+  const profile = db.profile.findUnique({ where: { clerkId: user.id } });
+  if (!profile) redirect("/profile/create");
+  return profile;
+};
+
+export const updateUserProfile: ActionFunction = async () => {
+  return { title: "Success", message: "Profile has been updated!" };
+};
+
 const getUser = async (): Promise<User> => {
   const user = await currentUser();
   if (!user) throw Error("Please login before accessing this menu");
+  return user;
+};
+
+const getAuthUser = async (): Promise<User> => {
+  const user = await getUser();
+  if (!user.privateMetadata.hasProfile) redirect("/profile/create");
   return user;
 };
