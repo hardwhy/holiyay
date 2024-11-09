@@ -1,15 +1,16 @@
 import SubmitButton from "@/components/form/button";
 import FormContainer from "@/components/form/form-container";
 import FormInput from "@/components/form/form-input";
-import { checkUserHasProfile, createProfileAction } from "@/utils/actions/profile-actions";
+import { ProfileActions } from "@/utils/actions/profile-actions";
 import { redirect } from "next/navigation";
 import React from "react";
 
-async function  CreateProfilePage() {
+async function CreateProfilePage() {
+  const { checkUserHasProfile, createProfileAction } = ProfileActions;
   const profile = await checkUserHasProfile();
 
-  if (profile) redirect('/');
-  
+  if (profile) redirect("/");
+
   return (
     <section>
       <h1 className="text-2xl font-semibold mb-8 capitalize">

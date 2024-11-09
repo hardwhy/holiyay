@@ -2,16 +2,14 @@ import SubmitButton from "@/components/form/button";
 import FormContainer from "@/components/form/form-container";
 import FormInput from "@/components/form/form-input";
 import { ImageInputContainer } from "@/components/form/image-input-container";
-import {
-  getUserProfile,
-  updateImageProfile,
-  updateUserProfile,
-} from "@/utils/actions/profile-actions";
-import { ActionResult } from "@/utils/types/action-result";
+import { ProfileActions } from "@/utils/actions/profile-actions";
 import React from "react";
 
 async function ProfilePage() {
+  const { getUserProfile, updateImageProfile, updateUserProfile } =
+    ProfileActions;
   const profile = await getUserProfile();
+
   return (
     <section>
       <h1 className="text-2xl font-semibold mb-8 capitalize"> User Profile</h1>
