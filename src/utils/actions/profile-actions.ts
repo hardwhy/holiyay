@@ -9,6 +9,7 @@ import { revalidatePath } from "next/cache";
 import { ActionResult } from "../types/action-result";
 import { validateWithZodSchema } from "../schemas/validator";
 import { ImageSchema } from "../schemas/image-schema";
+import { SupabaseStorage } from "../storage/supabase_storage";
 
 const handleError = ({
   error,
@@ -26,7 +27,7 @@ const handleError = ({
   return { title, message };
 };
 
-const createProfileAction: ActionFunction = async (
+export const createProfileAction: ActionFunction = async (
   prevState: any,
   data: FormData
 ) => {
@@ -61,7 +62,7 @@ const createProfileAction: ActionFunction = async (
   redirect("/");
 };
 
-const checkUserHasProfile = async (): Promise<boolean> => {
+export const checkUserHasProfile = async (): Promise<boolean> => {
   try {
     const user = await getUser();
     const hasProfile = user.privateMetadata?.hasProfile;
@@ -72,7 +73,7 @@ const checkUserHasProfile = async (): Promise<boolean> => {
   }
 };
 
-const getProfileImage = async () => {
+export const getProfileImage = async () => {
   try {
     const user = await getUser();
     const profile = await db.profile.findUnique({
@@ -87,14 +88,14 @@ const getProfileImage = async () => {
   }
 };
 
-const getUserProfile = async () => {
+export const getUserProfile = async () => {
   const user = await getAuthUser();
   const profile = db.profile.findUnique({ where: { clerkId: user.id } });
   if (!profile) redirect("/profile/create");
   return profile;
 };
 
-const updateUserProfile: ActionFunction = async (
+export const updateUserProfile: ActionFunction = async (
   prevState: any,
   data: FormData
 ) => {
@@ -121,23 +122,25 @@ const updateUserProfile: ActionFunction = async (
   }
 };
 
-const updateImageProfile: ActionFunction = async (
+export const updateImageProfile: ActionFunction = async (
   prevState: any,
   data: FormData
 ) => {
   try {
-    const raw = Object.fromEntries(data);
+    const user = await getAuthUser();
+    const image = data.get("image") as File;
+    const validatedFields = validateWithZodSchema(ImageSchema, { image });
+    const fullPath = await SupabaseStorage.uploadImage(validatedFields.image);
 
-    const validatedFields = validateWithZodSchema(ImageSchema, raw);
-    console.log(validatedFields);
+    await db.profile.update({
+      where: {
+        clerkId: user.id,
+      },
+      data: { profileImage: fullPath },
+    });
 
-    // await db.profile.update({
-    //   where: { clerkId: user.id },
-    //   data: validatedFields,
-    // });
-
-    // revalidatePath("/profile");
-    return { title: "Success", message: "Profile has been updated" };
+    revalidatePath("/profile");
+    return { title: "Success", message: "Profile image has been updated" };
   } catch (error) {
     return handleError({
       error,
@@ -157,13 +160,4 @@ const getAuthUser = async (): Promise<User> => {
   const user = await getUser();
   if (!user.privateMetadata.hasProfile) redirect("/profile/create");
   return user;
-};
-
-export const ProfileActions = {
-  createProfileAction,
-  updateImageProfile,
-  getProfileImage,
-  getUserProfile,
-  updateUserProfile,
-  checkUserHasProfile,
 };
