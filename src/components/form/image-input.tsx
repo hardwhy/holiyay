@@ -3,7 +3,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
 export function ImageInput() {
-  const name = "Image";
+  const name = "image";
   return (
     <div className="mb-2">
       <Label htmlFor={name} className="capitalize">
