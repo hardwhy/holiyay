@@ -44,7 +44,7 @@ export function ImageInputContainer({
       <Button
         variant={"outline"}
         size={"sm"}
-        onClick={(e) => {
+        onClick={() => {
           setIsOpen((v) => !v);
         }}
       >
