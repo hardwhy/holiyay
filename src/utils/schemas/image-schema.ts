@@ -2,14 +2,17 @@ import { z } from "zod";
 
 const validateFile = () => {
   const maxUploadSize = 1024 * 1024;
-  const acceptedFileType = ["image/*"];
+  const acceptedFileType = ["image/"];
   return z
     .instanceof(File)
     .refine((f) => {
-      return !f || f.size <= maxUploadSize;
+      const isSizeValid = !f || f.size <= maxUploadSize;
+      return isSizeValid;
     }, "File size must be less than 1 MB")
     .refine((f) => {
-      return !f || acceptedFileType.some((aft) => f.type.startsWith(aft));
+      const isExtensionValid =
+        !f || acceptedFileType.some((aft) => f.type.startsWith(aft));
+      return isExtensionValid;
     }, "File must be an image");
 };
 
