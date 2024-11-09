@@ -1,4 +1,4 @@
-import { z, ZodSchema } from "zod";
+import { z } from "zod";
 
 export const ProfileSchema = z.object({
   firstName: z
@@ -11,5 +11,3 @@ export const ProfileSchema = z.object({
     .string()
     .min(2, { message: "Username must be at least 2 characters" }),
 });
-
-

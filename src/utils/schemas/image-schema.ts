@@ -13,6 +13,6 @@ const validateFile = () => {
     }, "File must be an image");
 };
 
-export const imageSchema = z.object({
+export const ImageSchema = z.object({
   image: validateFile(),
 });
