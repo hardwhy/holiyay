@@ -4,5 +4,6 @@ export type Property = {
   name: string;
   tagline: string;
   country: string;
+  currency: string;
   price: number;
 };
