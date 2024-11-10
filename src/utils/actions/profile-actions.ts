@@ -6,27 +6,11 @@ import { ActionFunction } from "../types/action-function";
 import db from "../db/client";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { ActionResult } from "../types/action-result";
 import { validateWithZodSchema } from "../schemas/validator";
 import { ImageSchema } from "../schemas/image-schema";
 import { SupabaseStorage } from "../storage/supabase_storage";
 import { getAuthUser, getUser } from "./common-action";
-
-const handleError = ({
-  error,
-  caller,
-  title,
-}: {
-  error: unknown;
-  caller: string;
-  title: string;
-}): ActionResult => {
-  console.log("error from", caller, ": ", error);
-
-  let message: string = "";
-  if (error instanceof Error) message = error.message;
-  return { title, message };
-};
+import { handleError } from "./helper";
 
 export const createProfileAction: ActionFunction = async (
   prevState: any,
