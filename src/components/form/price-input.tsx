@@ -8,13 +8,13 @@ import {
   SelectValue,
   SelectContent,
 } from "../ui/select";
+import { currencies } from "@/utils/types/currency";
 
 type PriceInputProps = {
   defaultCurrency?: string;
   defaultValue?: number;
 };
 
-const currencies = ["IDR", "USD", "MYR", "AUD"];
 
 function PriceInput({ defaultValue, defaultCurrency }: PriceInputProps) {
   const price = "price";
