@@ -1,15 +1,19 @@
-import { Button } from '@/components/ui/button';
-import React from 'react'
+import CategoriesList from "@/components/home/categories-list";
+import PropertiesContainer from "@/components/home/properties-container";
+import { GetListRequest } from "@/utils/types/request/get_list_request";
+import React from "react";
 
-function HomePage() {
+type HomePageProps = { searchParams: GetListRequest };
+
+async function HomePage({ searchParams }: HomePageProps) {
+  console.log("search params", typeof searchParams, searchParams);
+
   return (
-    <div>
-      <h1 className="text-3xl">HomePage</h1>
-      <Button variant={'outline'} size={'lg'} className='capitalize m-8'>
-        Button
-      </Button>
-    </div>
+    <section>
+      <CategoriesList {...searchParams} />
+      <PropertiesContainer {...searchParams} />
+    </section>
   );
 }
 
-export default HomePage
+export default HomePage;
