@@ -4,8 +4,8 @@ import FormInput from "@/components/form/form-input";
 import { ImageInputContainer } from "@/components/form/image-input-container";
 import {
   getUserProfile,
-  updateImageProfile,
-  updateUserProfile,
+  updateImageProfileAction,
+  updateUserProfileAction,
 } from "@/utils/actions/profile-actions";
 import React from "react";
 
@@ -20,9 +20,9 @@ async function ProfilePage() {
           image={profile?.profileImage}
           name={profile?.username}
           text={"Update Profile Image"}
-          action={updateImageProfile}
+          action={updateImageProfileAction}
         />
-        <FormContainer action={updateUserProfile}>
+        <FormContainer action={updateUserProfileAction}>
           <div className="grid md:grid-cols-2 gap-4 mt-4">
             <FormInput
               defaultValue={profile?.firstName}

@@ -1,6 +1,6 @@
 "use server";
 
-import { clerkClient, currentUser, User } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 import { ProfileSchema } from "../schemas/profile-schema";
 import { ActionFunction } from "../types/action-function";
 import db from "../db/client";
@@ -10,6 +10,7 @@ import { ActionResult } from "../types/action-result";
 import { validateWithZodSchema } from "../schemas/validator";
 import { ImageSchema } from "../schemas/image-schema";
 import { SupabaseStorage } from "../storage/supabase_storage";
+import { getAuthUser, getUser } from "./common-action";
 
 const handleError = ({
   error,
@@ -95,7 +96,7 @@ export const getUserProfile = async () => {
   return profile;
 };
 
-export const updateUserProfile: ActionFunction = async (
+export const updateUserProfileAction: ActionFunction = async (
   prevState: any,
   data: FormData
 ) => {
@@ -122,7 +123,7 @@ export const updateUserProfile: ActionFunction = async (
   }
 };
 
-export const updateImageProfile: ActionFunction = async (
+export const updateImageProfileAction: ActionFunction = async (
   prevState: any,
   data: FormData
 ) => {
@@ -148,16 +149,4 @@ export const updateImageProfile: ActionFunction = async (
       title: "Something went wrong while updating profile",
     });
   }
-};
-
-const getUser = async (): Promise<User> => {
-  const user = await currentUser();
-  if (!user) throw Error("Please login before accessing this menu");
-  return user;
-};
-
-const getAuthUser = async (): Promise<User> => {
-  const user = await getUser();
-  if (!user.privateMetadata.hasProfile) redirect("/profile/create");
-  return user;
 };
