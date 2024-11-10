@@ -9,9 +9,12 @@ const supabase = createClient(url, key);
 
 const storage = supabase.storage.from(bucket);
 
-const uploadImage = async (image: File) => {
+const uploadImage = async (image: File, option?: {prefix?: string}) => {
   const timestamp = Date.now();
-  const name = `${timestamp}-${image.name}`;
+  let name = `${timestamp}-${image.name}`;
+  if (option) {
+    name = option.prefix + name;
+  }
   const { data } = await storage.upload(name, image, {
     cacheControl: "3600",
   });
