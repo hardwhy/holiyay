@@ -61,6 +61,7 @@ export const getPropertiesAction = async ({
       country: true,
       price: true,
       image: true,
+      currency: true,
     },
     orderBy: {
       createdAt: "desc",
