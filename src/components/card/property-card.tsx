@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import PropertyRating from "./property-rating";
-import FavoriteToggeButton from "./favorite-toggle-button";
+import FavoriteToggleButton from "./favorite-toggle-button";
 import CountryFlagAndCode from "./country-flag-and-name";
 
 type PropertyCardProps = {
@@ -46,7 +46,7 @@ function PropertyCard({
         </div>
       </Link>
       <div className="absolute top-5 right-5 z-5">
-        <FavoriteToggeButton propertyId={propertyId} />
+        <FavoriteToggleButton propertyId={propertyId} />
       </div>
     </article>
   );
