@@ -44,7 +44,7 @@ export const createPropertyAction: ActionFunction = async (
 
 export const getPropertiesAction = async ({
   search = "",
-  category = "",
+  category,
 }: GetListRequest): Promise<Property[]> => {
   const properties = await db.property.findMany({
     where: {
@@ -67,6 +67,9 @@ export const getPropertiesAction = async ({
       createdAt: "desc",
     },
   });
+
+  console.log('properties', properties);
+  
 
   return properties;
 };

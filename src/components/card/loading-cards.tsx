@@ -5,7 +5,7 @@ import { List } from "@/utils/helper/list-helper";
 function LoadingCards() {
   return (
     <div className="mt-4 gap-8 sm:grid-cols-2 grid lg:grid-cols-3 xl:grid-cols-4">
-      {...List.generate(4, () => <SkeletonCard />)}
+      {...List.generate(4, (index) => <SkeletonCard key={index} />)}
     </div>
   );
 }
