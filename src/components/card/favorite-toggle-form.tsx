@@ -1,9 +1,23 @@
-import React from 'react'
+'use client';
+import React from "react";
+import { usePathname } from "next/navigation";
+import FormContainer from "../form/form-container";
+import { CardSubmitButton } from "../form/button";
+import { toggleFavoriteActions } from "@/utils/actions/favorite-actions";
+type Props = {
+  favoriteId?: string;
+  propertyId: string;
+};
+function FavoriteToggleForm(props: Props) {
+  const pathname = usePathname();
+  const { favoriteId } = props;
+  const toggleAction = toggleFavoriteActions.bind(null, { ...props, pathname });
 
-function FavoriteToggleForm() {
   return (
-    <div>FavoriteToggleForm</div>
-  )
+    <FormContainer action={toggleAction}>
+      <CardSubmitButton isFavorite={!!favoriteId} />
+    </FormContainer>
+  );
 }
 
-export default FavoriteToggleForm
+export default FavoriteToggleForm;

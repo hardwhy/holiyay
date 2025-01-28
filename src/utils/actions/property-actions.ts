@@ -6,7 +6,7 @@ import { validateWithZodSchema } from "../schemas/validator";
 import { SupabaseStorage } from "../storage/supabase_storage";
 import { ActionFunction } from "../types/action-function";
 import { Property } from "../types/property";
-import { GetListRequest } from "../types/request/get_list_request";
+import { GetListRequest } from "../types/request/get-list-request";
 import { getAuthUser } from "./common-action";
 import { handleError } from "./helper";
 import db from "@/utils/db/client";
@@ -24,9 +24,6 @@ export const createPropertyAction: ActionFunction = async (
     const fullPath = await SupabaseStorage.uploadImage(validatedFile.image, {
       prefix: "property-",
     });
-    console.log("validatedFields:", validatedFields);
-    console.log("fullPath:", fullPath);
-    console.log("user.id:", user.id);
 
     await db.property.create({
       data: { ...validatedFields, image: fullPath, profileId: user.id },
@@ -67,9 +64,6 @@ export const getPropertiesAction = async ({
       createdAt: "desc",
     },
   });
-
-  console.log('properties', properties);
-  
 
   return properties;
 };

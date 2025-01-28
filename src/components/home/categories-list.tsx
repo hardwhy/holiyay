@@ -1,4 +1,4 @@
-import { GetListRequest } from "@/utils/types/request/get_list_request";
+import { GetListRequest } from "@/utils/types/request/get-list-request";
 import React from "react";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { categories } from "@/utils/types/category";

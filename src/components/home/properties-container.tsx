@@ -1,4 +1,4 @@
-import { GetListRequest } from "@/utils/types/request/get_list_request";
+import { GetListRequest } from "@/utils/types/request/get-list-request";
 import React from "react";
 import EmptyList from "./empty-list";
 import { Property } from "@/utils/types/property";
