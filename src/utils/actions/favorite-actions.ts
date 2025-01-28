@@ -6,8 +6,9 @@ import { getAuthUser } from "./common-action";
 import db from "@/utils/db/client";
 import { handleError } from "./helper";
 import { revalidatePath } from "next/cache";
+import { Property } from "@prisma/client";
 
-export const toggleFavoriteActions: ActionFunction = async ({
+export const toggleFavorite: ActionFunction = async ({
   propertyId,
   favoriteId,
   pathname,
@@ -44,7 +45,7 @@ export const toggleFavoriteActions: ActionFunction = async ({
   }
 };
 
-export const fetchFavoriteId = async ({
+export const fetchFavoriteIdByPropertyId = async ({
   id: propertyId,
 }: GetByIdRequest): Promise<string | undefined> => {
   const user = await getAuthUser();
@@ -62,4 +63,28 @@ export const fetchFavoriteId = async ({
   });
 
   return favorite?.id;
+};
+
+export const fetchFavorites = async (): Promise<Property[]> => {
+  const user = await getAuthUser();
+  const favorites = await db.favorite.findMany({
+    where: {
+      profileId: user.id,
+    },
+    select: {
+      property: {
+        select: {
+          id: true,
+          name: true,
+          tagline: true,
+          country: true,
+          price: true,
+          image: true,
+          currency: true,
+        },
+      },
+    },
+  });
+
+  return favorites.map((fav) => (fav.property as Property));
 };
