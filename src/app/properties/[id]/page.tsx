@@ -1,5 +1,6 @@
 import FavoriteToggleButton from "@/components/card/favorite-toggle-button";
 import PropertyRating from "@/components/card/property-rating";
+import BookingCalendar from "@/components/properties/booking-calendar";
 import Breadcrumbs from "@/components/properties/breadcrumbs";
 import ImageContainer from "@/components/properties/image-container";
 import ShareButton from "@/components/properties/share-button";
@@ -36,7 +37,9 @@ async function PropertyDetailPage({ params: { id } }: { params: Props }) {
             <PropertyRating inPage propertyId={id} />
           </div>
         </div>
-        <div className="lg:col-span-4 flex flex-col items-center"></div>
+        <div className="lg:col-span-4 flex flex-col items-center">
+          <BookingCalendar />
+        </div>
       </section>
     </section>
   );
