@@ -8,7 +8,7 @@ import FormInput from "@/components/form/form-input";
 import { ImageInput } from "@/components/form/image-input";
 import PriceInput from "@/components/form/price-input";
 import TextAreaInput from "@/components/form/text-area-input";
-import { createPropertyAction } from "@/utils/actions/property-actions";
+import { createProperty } from "@/utils/actions/property-actions";
 import React from "react";
 
 const LabelWithSpannedInfo = ({
@@ -37,7 +37,7 @@ function CreatePropertyPage() {
       </h1>
       <div className="border p-8 rounded-md">
         <h3 className="text-lg mb-4 font-medium">General Info</h3>
-        <FormContainer action={createPropertyAction}>
+        <FormContainer action={createProperty}>
           <div className="grid md:grid-cols-2 gap-8 mb-4">
             <FormInput
               name="name"

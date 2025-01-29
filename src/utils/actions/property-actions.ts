@@ -1,17 +1,19 @@
 "use server";
 
+import { Property } from "@prisma/client";
 import { ImageSchema } from "../schemas/image-schema";
 import { PropertySchema } from "../schemas/property-schema";
 import { validateWithZodSchema } from "../schemas/validator";
 import { SupabaseStorage } from "../storage/supabase_storage";
 import { ActionFunction } from "../types/action-function";
-import { Property } from "../types/property";
+import { Property as PropertyCard } from "../types/property";
+import { GetByIdRequest } from "../types/request/get-by-id-request";
 import { GetListRequest } from "../types/request/get-list-request";
 import { getAuthUser } from "./common-action";
 import { handleError } from "./helper";
 import db from "@/utils/db/client";
 
-export const createPropertyAction: ActionFunction = async (
+export const createProperty: ActionFunction = async (
   prevState: any,
   data: FormData
 ) => {
@@ -39,10 +41,10 @@ export const createPropertyAction: ActionFunction = async (
   }
 };
 
-export const getPropertiesAction = async ({
+export const getProperties = async ({
   search = "",
   category,
-}: GetListRequest): Promise<Property[]> => {
+}: GetListRequest): Promise<PropertyCard[]> => {
   const properties = await db.property.findMany({
     where: {
       category,
@@ -66,4 +68,24 @@ export const getPropertiesAction = async ({
   });
 
   return properties;
+};
+
+export const getPropertyById = async ({
+  id,
+}: GetByIdRequest): Promise<Property | null> => {
+  console.log('id', id);
+  
+  const properties = await db.property.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      bedrooms: true,
+      bathrooms: true,
+      beds: true,
+      guests: true,
+    },
+  });
+
+  return properties as Property | null;
 };
