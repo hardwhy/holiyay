@@ -73,17 +73,11 @@ export const getProperties = async ({
 export const getPropertyById = async ({
   id,
 }: GetByIdRequest): Promise<Property | null> => {
-  console.log('id', id);
-  
+  console.log("id", id);
+
   const properties = await db.property.findUnique({
     where: {
       id,
-    },
-    select: {
-      bedrooms: true,
-      bathrooms: true,
-      beds: true,
-      guests: true,
     },
   });
 
