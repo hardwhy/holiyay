@@ -1,6 +1,6 @@
 "use server";
 
-import { Property } from "@prisma/client";
+import { Profile, Property } from "@prisma/client";
 import { ImageSchema } from "../schemas/image-schema";
 import { PropertySchema } from "../schemas/property-schema";
 import { validateWithZodSchema } from "../schemas/validator";
@@ -72,14 +72,15 @@ export const getProperties = async ({
 
 export const getPropertyById = async ({
   id,
-}: GetByIdRequest): Promise<Property | null> => {
-  console.log("id", id);
-
-  const properties = await db.property.findUnique({
+}: GetByIdRequest): Promise<(Property & { profile: Profile }) | null> => {
+  const property = await db.property.findUnique({
     where: {
       id,
     },
+    include: {
+      profile: true,
+    },
   });
 
-  return properties as Property | null;
+  return property as (Property & { profile: Profile }) | null;
 };
