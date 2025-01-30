@@ -1,6 +1,7 @@
 import FavoriteToggleButton from "@/components/card/favorite-toggle-button";
 import PropertyRating from "@/components/card/property-rating";
 import {
+  Amenities,
   BookingCalendar,
   Breadcrumbs,
   Description,
@@ -21,7 +22,7 @@ async function PropertyDetailPage({ params }: Props) {
   const id = (await params).id;
   const property = await getPropertyById({ id });
   if (!property) redirect("/");
-  const { name, tagline, image, profile, description } = property;
+  const { name, tagline, image, profile, description, amenities } = property;
 
   return (
     <section>
@@ -45,6 +46,7 @@ async function PropertyDetailPage({ params }: Props) {
           <UserInfo profile={profile} />
           <Separator className="mt-4" />
           <Description text={description} />
+          <Amenities amenities={amenities} />
         </div>
         <div className="lg:col-span-4 flex flex-col items-center">
           <BookingCalendar />
