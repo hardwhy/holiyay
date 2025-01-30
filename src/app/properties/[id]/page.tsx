@@ -1,22 +1,25 @@
 import FavoriteToggleButton from "@/components/card/favorite-toggle-button";
 import PropertyRating from "@/components/card/property-rating";
-import BookingCalendar from "@/components/properties/booking-calendar";
-import Breadcrumbs from "@/components/properties/breadcrumbs";
-import ImageContainer from "@/components/properties/image-container";
-import ShareButton from "@/components/properties/share-button";
+import {
+  BookingCalendar,
+  Breadcrumbs,
+  ImageContainer,
+  PropertyFeatures,
+  ShareButton,
+  UserInfo,
+} from "@/components/properties";
 import { getPropertyById } from "@/utils/actions/property-actions";
 import { redirect } from "next/navigation";
-import React from "react";
 
 type Props = {
-  id: string;
+  params: any;
 };
 
-async function PropertyDetailPage({ params: { id } }: { params: Props }) {
+async function PropertyDetailPage({ params }: Props) {
+  const id = (await params).id;
   const property = await getPropertyById({ id });
   if (!property) redirect("/");
-  const { bathrooms, bedrooms, beds, guests, name, tagline, image } = property;
-  const details = { bathrooms, bedrooms, beds, guests };
+  const { name, tagline, image, profile } = property;
 
   return (
     <section>
@@ -36,6 +39,8 @@ async function PropertyDetailPage({ params: { id } }: { params: Props }) {
             <h1 className="text-xl font-bold">{name}</h1>
             <PropertyRating inPage propertyId={id} />
           </div>
+          <PropertyFeatures property={property} />
+          <UserInfo profile={profile} />
         </div>
         <div className="lg:col-span-4 flex flex-col items-center">
           <BookingCalendar />

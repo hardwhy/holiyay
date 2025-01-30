@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/utils/helper/format-currency";
+import { formatCurrency } from "@/utils/helper/format";
 import { Property } from "@/utils/types/property";
 import Image from "next/image";
 import Link from "next/link";

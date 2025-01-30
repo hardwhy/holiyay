@@ -4,14 +4,15 @@ import PropertiesContainer from "@/components/home/properties-container";
 import { GetListRequest } from "@/utils/types/request/get-list-request";
 import React, { Suspense } from "react";
 
-type HomePageProps = { searchParams: GetListRequest };
+type HomePageProps = { searchParams: any };
 
 async function HomePage({ searchParams }: HomePageProps) {
+  const parsedParams: GetListRequest = await searchParams;
   return (
     <section>
-      <CategoriesList {...searchParams} />
+      <CategoriesList {...parsedParams} />
       <Suspense fallback={<LoadingCards />}>
-        <PropertiesContainer {...searchParams} />
+        <PropertiesContainer {...parsedParams} />
       </Suspense>
     </section>
   );
