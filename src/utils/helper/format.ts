@@ -9,3 +9,13 @@ export const formatCurrency = (amount: number | null, currency?: Currency | stri
     maximumFractionDigits: 0,
   }).format(value);
 };
+
+export const formatQuantity = (
+  quantity: number ,
+  noun: string
+) => {
+  let formatted = `${quantity} ${noun}`;
+  if (quantity > 1) formatted += 's';
+
+  return formatted;
+};
