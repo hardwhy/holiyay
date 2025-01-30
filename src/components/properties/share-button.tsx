@@ -19,7 +19,8 @@ import { Property } from "@prisma/client";
 type Props = {
   data: Property;
 };
-function ShareButton({ data: { id, name, ...data } }: Props) {
+
+export function ShareButton({ data: { id, name, ...data } }: Props) {
   const url = process.env.NEXT_PUBLIC_WEBSITE_URL;
   const shareUrl = url + "/properties/" + id;
   const iconProps = { size: 32, borderRadius: 8 };
@@ -53,4 +54,3 @@ function ShareButton({ data: { id, name, ...data } }: Props) {
   );
 }
 
-export default ShareButton;

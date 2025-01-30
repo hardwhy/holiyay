@@ -5,7 +5,8 @@ type Props = {
   mainImage: string;
   name: string;
 };
-function ImageContainer({ mainImage, name }: Props) {
+
+export function ImageContainer({ mainImage, name }: Props) {
   return (
     <section className="h-[300px] md:h-[500px] relative mt-8">
       <Image
@@ -19,5 +20,3 @@ function ImageContainer({ mainImage, name }: Props) {
     </section>
   );
 }
-
-export default ImageContainer;

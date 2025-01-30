@@ -11,7 +11,8 @@ import {
 type Props = {
   name: string;
 };
-function Breadcrumbs({ name }: Props) {
+
+export function Breadcrumbs({ name }: Props) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -24,5 +25,3 @@ function Breadcrumbs({ name }: Props) {
     </Breadcrumb>
   );
 }
-
-export default Breadcrumbs;
