@@ -1,8 +1,13 @@
 import { z } from "zod";
 
 const validateFile = () => {
+  if (typeof File === "undefined") {
+    return z.any(); // Bypass validation if File is not defined (server-side)
+  }
+
   const maxUploadSize = 1024 * 1024;
   const acceptedFileType = ["image/"];
+
   return z
     .instanceof(File)
     .refine((f) => {
