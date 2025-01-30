@@ -3,11 +3,13 @@ import PropertyRating from "@/components/card/property-rating";
 import {
   BookingCalendar,
   Breadcrumbs,
+  Description,
   ImageContainer,
   PropertyFeatures,
   ShareButton,
   UserInfo,
 } from "@/components/properties";
+import { Separator } from "@/components/ui/separator";
 import { getPropertyById } from "@/utils/actions/property-actions";
 import { redirect } from "next/navigation";
 
@@ -19,7 +21,7 @@ async function PropertyDetailPage({ params }: Props) {
   const id = (await params).id;
   const property = await getPropertyById({ id });
   if (!property) redirect("/");
-  const { name, tagline, image, profile } = property;
+  const { name, tagline, image, profile, description } = property;
 
   return (
     <section>
@@ -41,6 +43,8 @@ async function PropertyDetailPage({ params }: Props) {
           </div>
           <PropertyFeatures property={property} />
           <UserInfo profile={profile} />
+          <Separator className="mt-4" />
+          <Description text={description} />
         </div>
         <div className="lg:col-span-4 flex flex-col items-center">
           <BookingCalendar />
