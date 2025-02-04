@@ -6,6 +6,7 @@ import {
   Breadcrumbs,
   Description,
   ImageContainer,
+  MapClientWrapper,
   PropertyFeatures,
   ShareButton,
   UserInfo,
@@ -13,6 +14,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { getPropertyById } from "@/utils/actions/property-actions";
 import { redirect } from "next/navigation";
+
 
 type Props = {
   params: any;
@@ -47,6 +49,7 @@ async function PropertyDetailPage({ params }: Props) {
           <Separator className="mt-4" />
           <Description text={description} />
           <Amenities amenities={amenities} />
+          <MapClientWrapper countryCode={property.country} />
         </div>
         <div className="lg:col-span-4 flex flex-col items-center">
           <BookingCalendar />

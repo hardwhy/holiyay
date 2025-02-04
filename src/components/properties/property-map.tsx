@@ -1,0 +1,50 @@
+"use client";
+
+import { findCountryByCode } from "@/utils/types/country";
+import React from "react";
+import { icon } from "leaflet";
+import { MapContainer, Marker, TileLayer, ZoomControl } from "react-leaflet";
+import { Title } from "./typography";
+import CountryFlagAndCode from "../card/country-flag-and-name";
+import "leaflet/dist/leaflet.css";
+
+const iconUrl =
+  "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png";
+const markerIcon = icon({
+  iconUrl: iconUrl,
+  iconSize: [20, 30],
+});
+
+type Props = {
+  countryCode: string;
+};
+
+export const PropertyMap = ({ countryCode }: Props) => {
+  const defaultLocation = [51.505, -0.09] as [number, number];
+  const location = findCountryByCode(countryCode)?.location as [number, number];
+  
+  return (
+    <div className="mt-4">
+      <div className="mb-4">
+        <Title text="Where you will be staying" />
+        <CountryFlagAndCode countryCode={countryCode} />
+      </div>
+      <MapContainer
+        key={countryCode}
+        id={countryCode}
+        scrollWheelZoom={false}
+        zoomControl={false}
+        className="h-[50vh] rounded-lg relative z-0"
+        center={location || defaultLocation}
+        zoom={7}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <ZoomControl position="bottomright" />
+        <Marker icon={markerIcon} position={location || defaultLocation} />
+      </MapContainer>
+    </div>
+  );
+};
