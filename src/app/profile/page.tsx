@@ -9,6 +9,8 @@ import {
 } from "@/utils/actions/profile-actions";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 async function ProfilePage() {
   const profile = await getUserProfile();
 

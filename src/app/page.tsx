@@ -6,6 +6,8 @@ import React, { Suspense } from "react";
 
 type HomePageProps = { searchParams: any };
 
+export const dynamic = "force-dynamic";
+
 async function HomePage({ searchParams }: HomePageProps) {
   const parsedParams: GetListRequest = await searchParams;
   return (

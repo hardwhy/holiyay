@@ -1,5 +1,5 @@
 import AmenityInput from "@/components/form/amenity-input";
-import SubmitButton from "@/components/form/button";
+import { SubmitButton } from "@/components/form/button";
 import CategoryInput from "@/components/form/category-input";
 import CounterInput from "@/components/form/counter-input";
 import CountryInput from "@/components/form/country-input";
@@ -10,6 +10,8 @@ import PriceInput from "@/components/form/price-input";
 import TextAreaInput from "@/components/form/text-area-input";
 import { createProperty } from "@/utils/actions/property-actions";
 import React from "react";
+
+export const dynamic = "force-dynamic";
 
 const LabelWithSpannedInfo = ({
   label,

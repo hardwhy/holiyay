@@ -1,4 +1,4 @@
-import SubmitButton from "@/components/form/button";
+import { SubmitButton } from "@/components/form/button";
 import FormContainer from "@/components/form/form-container";
 import FormInput from "@/components/form/form-input";
 import {
@@ -8,6 +8,7 @@ import {
 import { redirect } from "next/navigation";
 import React from "react";
 
+export const dynamic = "force-dynamic";
 async function CreateProfilePage() {
   const profile = await checkUserHasProfile();
 
