@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "2mb",
     },
   },
+  transpilePackages: ["leaflet"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "img.clerk.com" },

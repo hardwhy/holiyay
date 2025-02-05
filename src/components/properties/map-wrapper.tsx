@@ -2,7 +2,6 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import dynamic from "next/dynamic";
-import "leaflet/dist/leaflet.css"; 
 
 const Map = dynamic(
   () =>
