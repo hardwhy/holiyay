@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
     },
   },
   transpilePackages: ["leaflet"],
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      leaflet: "leaflet/dist/leaflet.js",
+      "leaflet-css": "leaflet/dist/leaflet.css",
+    };
+    return config;
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "img.clerk.com" },
