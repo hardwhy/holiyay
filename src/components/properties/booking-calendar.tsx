@@ -6,7 +6,7 @@ import { Calendar } from "../ui/calendar";
 
 export function BookingCalendar() {
   const today = new Date();
-  let defaultSelected: DateRange = {
+  const defaultSelected: DateRange = {
     from: undefined,
     to: undefined,
   };

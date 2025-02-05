@@ -21,6 +21,7 @@ function NavSearch() {
     replace(`${pathname}?${params}`);
   }, 500);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const searchParam = useMemo(() => qParams.get(SEARCH), [qParams.get(SEARCH)]);
 
   useEffect(() => {

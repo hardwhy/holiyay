@@ -3,7 +3,7 @@
 import { ActionFunction } from "@/utils/types/action-function";
 import Image from "next/image";
 import React, { ReactNode, useState } from "react";
-import { LuUser2 } from "react-icons/lu";
+import { LuUser } from "react-icons/lu";
 import { Button } from "../ui/button";
 import FormContainer from "./form-container";
 import { ImageInput } from "./image-input";
@@ -26,7 +26,7 @@ export function ImageInputContainer({
 }: ImageInputContainerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const userIcon = (
-    <LuUser2 className="w-24 h-24 bg-primary rounded text-white mb-4" />
+    <LuUser className="w-24 h-24 bg-primary rounded text-white mb-4" />
   );
   return (
     <div>
