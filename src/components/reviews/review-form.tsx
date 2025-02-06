@@ -6,9 +6,10 @@ import { Card } from "../ui/card";
 import FormContainer from "../form/form-container";
 import TextAreaInput from "../form/text-area-input";
 import { submitReview } from "@/utils/actions/review-actions";
+import { SubmitButton } from "../form/button";
 
 type Props = { propertyId: string };
-export const SubmitReview = ({ propertyId }: Props) => {
+export const ReviewForm = ({ propertyId }: Props) => {
   const [visible, setVisible] = useState(false);
   return (
     <div className="mt-8">
@@ -25,7 +26,7 @@ export const SubmitReview = ({ propertyId }: Props) => {
               label="Your thoughts on this property"
               placeholder="A great place to go!"
             />
-            <Button type="submit" className="mt-4">Submit</Button>
+            <SubmitButton text="Submit" className="mt-4" />
           </FormContainer>
         </Card>
       )}

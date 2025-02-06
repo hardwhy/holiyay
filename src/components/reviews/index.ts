@@ -1,1 +1,1 @@
-export * from "./submit-review";
+export * from "./review-form";
