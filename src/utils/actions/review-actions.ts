@@ -8,6 +8,7 @@ import { handleError } from "./helper";
 import { revalidatePath } from "next/cache";
 import { Profile, Review } from "@prisma/client";
 import { ActionResult } from "../types/action-result";
+import { ReviewWithProfile } from "@/domain/model";
 
 export const submitReview: ActionFunction = async (
   prev: any,
@@ -41,7 +42,7 @@ export const submitReview: ActionFunction = async (
 
 export const getReviews = async (
   propertyId: string
-): Promise<(Review & { profile: Profile })[] | ActionResult> => {
+): Promise<ReviewWithProfile[] | ActionResult> => {
   try {
     const reviews = await db.review.findMany({
       where: { propertyId },
@@ -61,12 +62,63 @@ export const getReviews = async (
         createdAt: "desc",
       },
     });
-    return reviews as (Review & { profile: Profile })[];
+    return reviews as ReviewWithProfile[];
   } catch (error) {
     return handleError({
       error,
       caller: "getReviews",
       title: "Error getting reviews",
+    });
+  }
+};
+
+export const getReviewsByUser = async (): Promise<
+  ReviewWithProfile[] | ActionResult
+> => {
+  const user = await getAuthUser();
+  try {
+    const review = await db.review.findMany({
+      where: { profileId: user.id },
+      select: {
+        id: true,
+        rating: true,
+        comment: true,
+        createdAt: true,
+        profile: {
+          select: {
+            firstName: true,
+            lastName: true,
+            profileImage: true,
+          },
+        },
+      },
+    });
+    return review as ReviewWithProfile[];
+  } catch (error) {
+    return handleError({
+      error,
+      caller: "getReviewsByUser",
+      title: "Error getting reviews by user",
+    });
+  }
+};
+
+export const deleteReview = async (reviewId: string): Promise<ActionResult> => {
+  const user = await getAuthUser();
+  try {
+    await db.review.delete({
+      where: { id: reviewId, profileId: user.id },
+    });
+    revalidatePath("/reviews");
+    return {
+      message: "Review deleted successfully",
+      title: "Success",
+    };
+  } catch (error) {
+    return handleError({
+      error,
+      caller: "deleteReview",
+      title: "Error deleting review",
     });
   }
 };
