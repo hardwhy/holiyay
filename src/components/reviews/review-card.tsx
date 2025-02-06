@@ -1,16 +1,18 @@
-import { Review, Profile } from "@prisma/client";
+import { ReviewWithProfile } from "@/domain/model";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Rating } from "./rating";
 import { Comment } from "./comment";
+
 type Props = {
-  review: Review & { profile: Profile };
+  review: ReviewWithProfile;
+  children?: React.ReactNode;
 };
 
-export const ReviewCard = ({ review }: Props) => {
+export const ReviewCard = ({ review, children }: Props) => {
   const { rating, comment, profile } = review;
   const { firstName, lastName, profileImage } = profile;
   return (
-    <Card>
+    <Card className="relative">
       <CardHeader>
         <div className="flex items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -30,7 +32,7 @@ export const ReviewCard = ({ review }: Props) => {
       <CardContent>
         <Comment comment={comment} />
       </CardContent>
-      <div className="absolute top-3 right-3"></div>
+      <div className="absolute top-3 right-3">{children}</div>
     </Card>
   );
 };
