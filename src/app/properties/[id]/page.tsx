@@ -11,6 +11,7 @@ import {
   ShareButton,
   UserInfo,
 } from "@/components/properties";
+import { SubmitReview } from "@/components/reviews";
 import { Separator } from "@/components/ui/separator";
 import { getPropertyById } from "@/utils/actions/property-actions";
 import { redirect } from "next/navigation";
@@ -55,6 +56,7 @@ async function PropertyDetailPage({ params }: Props) {
           <BookingCalendar />
         </div>
       </section>
+      <SubmitReview propertyId={id} />
     </section>
   );
 }
