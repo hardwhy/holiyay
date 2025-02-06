@@ -11,7 +11,7 @@ import {
   ShareButton,
   UserInfo,
 } from "@/components/properties";
-import { ReviewForm } from "@/components/reviews";
+import { ReviewForm, ReviewsList } from "@/components/reviews";
 import { Separator } from "@/components/ui/separator";
 import { getPropertyById } from "@/utils/actions/property-actions";
 import { redirect } from "next/navigation";
@@ -56,6 +56,7 @@ async function PropertyDetailPage({ params }: Props) {
         </div>
       </section>
       <ReviewForm propertyId={id} />
+      <ReviewsList propertyId={id} />
     </section>
   );
 }
