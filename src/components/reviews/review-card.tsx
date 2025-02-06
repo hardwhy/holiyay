@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const ReviewCard = ({ review }: Props) => {
-  const { rating, comment, createdAt, profile } = review;
+  const { rating, comment, profile } = review;
   const { firstName, lastName, profileImage } = profile;
   return (
     <Card>
