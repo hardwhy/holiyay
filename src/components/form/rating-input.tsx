@@ -1,7 +1,12 @@
 import React from "react";
 import { Label } from "../ui/label";
-import { Select, SelectContent, SelectItem } from "../ui/select";
-import { SelectTrigger, SelectValue } from "@radix-ui/react-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+  SelectTrigger,
+} from "../ui/select";
 
 type Props = {
   name: string;
