@@ -84,3 +84,19 @@ export const getPropertyById = async ({
 
   return property as (Property & { profile: Profile }) | null;
 };
+
+export const getPropertyRating = async (propertyId: string) => {
+  const result = await db.review.groupBy({
+    by: ["propertyId"],
+    _count: { rating: true },
+    _avg: { rating: true },
+    where: {
+      propertyId,
+    },
+  });
+
+  return {
+    count: result[0]?._count.rating ?? 0,
+    rating: result[0]?._avg.rating?.toFixed(1) ?? 0,
+  };
+};
