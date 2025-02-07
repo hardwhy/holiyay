@@ -6,9 +6,10 @@ import { getAuthUser } from "./common-action";
 import db from "@/utils/db/client";
 import { handleError } from "./helper";
 import { revalidatePath } from "next/cache";
-import { Profile, Review } from "@prisma/client";
+import { Review } from "@prisma/client";
 import { ActionResult } from "../types/action-result";
 import { ReviewWithProfile } from "@/domain/model";
+import { auth } from "@clerk/nextjs/server";
 
 export const submitReview: ActionFunction = async (
   prev: any,
@@ -120,5 +121,20 @@ export const deleteReview = async (reviewId: string): Promise<ActionResult> => {
       caller: "deleteReview",
       title: "Error deleting review",
     });
+  }
+};
+
+export const getExistingReview = async (
+  propertyId: string
+): Promise<Review | null> => {
+  const { userId } = await auth();
+  if (!userId) return null;
+  try {
+    const review = await db.review.findFirst({
+      where: { propertyId, profileId: userId },
+    });
+    return review as Review;
+  } catch {
+    return null;
   }
 };

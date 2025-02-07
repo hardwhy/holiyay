@@ -4,13 +4,13 @@ import { Title } from "@/components/properties";
 import { ReviewCard } from "@/components/reviews";
 import { IconButton } from "@/components/form/button";
 import FormContainer from "@/components/form/form-container";
+import EmptyList from "@/components/home/empty-list";
 
 export const dynamic = "force-dynamic";
 
 async function ReviewPage() {
   const reviews = await getReviewsByUser();
-  if (!Array.isArray(reviews)) return;
-  if (!reviews.length) return;
+  if (!Array.isArray(reviews) || !reviews.length) return <EmptyList />;
   return (
     <>
       <Title text="Your reviews" />

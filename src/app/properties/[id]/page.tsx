@@ -14,6 +14,8 @@ import {
 import { ReviewForm, ReviewsList } from "@/components/reviews";
 import { Separator } from "@/components/ui/separator";
 import { getPropertyById } from "@/utils/actions/property-actions";
+import { getExistingReview } from "@/utils/actions/review-actions";
+import { validToReview } from "@/utils/helper/validator";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -25,6 +27,8 @@ async function PropertyDetailPage({ params }: Props) {
   const property = await getPropertyById({ id });
   if (!property) redirect("/");
   const { name, tagline, image, profile, description, amenities } = property;
+  const existingReview = await getExistingReview(id);
+  const willReview = await validToReview(existingReview, profile);
 
   return (
     <section>
@@ -55,7 +59,7 @@ async function PropertyDetailPage({ params }: Props) {
           <BookingCalendar />
         </div>
       </section>
-      <ReviewForm propertyId={id} />
+      {willReview && <ReviewForm propertyId={id} />}
       <ReviewsList propertyId={id} />
     </section>
   );
