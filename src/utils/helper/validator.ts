@@ -1,8 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
-import { Profile, Property, Review } from "@prisma/client";
-import Logger from "./logger";
+import { Profile, Review } from "@prisma/client";
 
-const validToReview = async (
+const validToReview = async ( 
   existingReview: Review | null,
   profile: Profile
 ) => {
